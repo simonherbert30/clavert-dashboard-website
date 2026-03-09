@@ -302,6 +302,160 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Revenue Dashboard</span><span>Pipeline & subscriptions overview</span></div>
   </div>
 
+  <!-- Customers sheet -->
+  <div class="sheet sheet-customers" id="sheet-customers">
+    <div class="header">
+      <div><h1>Customers Dashboard</h1><p>Cohorts, segments & lifecycle metrics</p></div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card anim d1">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(58,158,110,.08)"></div>
+          <div class="stat-badge up">+12.1%</div>
+        </div>
+        <div class="stat-label">Active Customers</div>
+        <div class="stat-value">12,847</div>
+      </div>
+      <div class="stat-card anim d2">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(152,195,244,.12)"></div>
+          <div class="stat-badge up">+6.4%</div>
+        </div>
+        <div class="stat-label">New This Month</div>
+        <div class="stat-value">820</div>
+      </div>
+      <div class="stat-card anim d3">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(93,118,146,.1)"></div>
+          <div class="stat-badge up">+4.3</div>
+        </div>
+        <div class="stat-label">NPS Score</div>
+        <div class="stat-value">62</div>
+      </div>
+      <div class="stat-card anim d4">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(201,69,69,.06)"></div>
+          <div class="stat-badge down">-0.6%</div>
+        </div>
+        <div class="stat-label">Monthly Churn</div>
+        <div class="stat-value">2.7%</div>
+      </div>
+    </div>
+
+    <div class="charts-row" style="margin-top:1rem">
+      <div class="card anim d5">
+        <div class="card-header">
+          <div><div class="card-title">Active vs New Customers</div><div class="card-subtitle">Last 6 months</div></div>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Active</span>
+            <span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>New</span>
+          </div>
+        </div>
+        <div style="position:relative;height:170px"><canvas id="customerLifecycleChart"></canvas></div>
+      </div>
+      <div class="card anim d6">
+        <div class="card-header">
+          <div><div class="card-title">Customers by Segment</div><div class="card-subtitle">Active accounts & revenue mix</div></div>
+        </div>
+        <div style="position:relative;height:170px"><canvas id="customerSegmentChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card anim d7" style="margin-top:1rem">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Key Customer Cohorts</div>
+          <div class="card-subtitle">Retention and expansion focus</div>
+        </div>
+      </div>
+      <div class="table-header"><span>Cohort</span><span>Customers</span><span>MRR</span><span>Retention</span></div>
+      <div>
+        <div class="table-row">
+          <span class="name">2023 Enterprise</span><span class="num">96</span><span class="rev">$48,400</span><span class="growth up">94%</span>
+        </div>
+        <div class="table-row">
+          <span class="name">2023 Mid-market</span><span class="num">312</span><span class="rev">$27,900</span><span class="growth up">91%</span>
+        </div>
+        <div class="table-row">
+          <span class="name">2024 Product-led</span><span class="num">1,420</span><span class="rev">$18,600</span><span class="growth up">88%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Customers Dashboard</span><span>Retention & expansion insights</span></div>
+  </div>
+
+  <!-- Products sheet -->
+  <div class="sheet sheet-products" id="sheet-products">
+    <div class="header">
+      <div><h1>Products Dashboard</h1><p>Line performance & product mix</p></div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card anim d1">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(152,195,244,.12)"></div>
+          <div class="stat-badge up">+23%</div>
+        </div>
+        <div class="stat-label">Top Product Revenue</div>
+        <div class="stat-value">$187,200</div>
+      </div>
+      <div class="stat-card anim d2">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(93,118,146,.1)"></div>
+          <div class="stat-badge up">5</div>
+        </div>
+        <div class="stat-label">Active Products</div>
+        <div class="stat-value">5</div>
+      </div>
+      <div class="stat-card anim d3">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(58,158,110,.08)"></div>
+          <div class="stat-badge up">+8.7%</div>
+        </div>
+        <div class="stat-label">Total Sales</div>
+        <div class="stat-value">3,456</div>
+      </div>
+      <div class="stat-card anim d4">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(201,69,69,.06)"></div>
+          <div class="stat-badge down">-5%</div>
+        </div>
+        <div class="stat-label">At-Risk Line</div>
+        <div class="stat-value">API Kit</div>
+      </div>
+    </div>
+
+    <div class="charts-row" style="margin-top:1rem">
+      <div class="card anim d5">
+        <div class="card-header">
+          <div><div class="card-title">Product Revenue Share</div><div class="card-subtitle">Current period by product</div></div>
+        </div>
+        <div style="position:relative;height:170px"><canvas id="productShareChart"></canvas></div>
+      </div>
+      <div class="card anim d6">
+        <div class="card-header">
+          <div><div class="card-title">Top Products over Time</div><div class="card-subtitle">MRR by month</div></div>
+        </div>
+        <div style="position:relative;height:170px"><canvas id="productTrendChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card anim d7" style="margin-top:1rem">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Product Performance</div>
+          <div class="card-subtitle">Same data as overview</div>
+        </div>
+      </div>
+      <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
+      <div id="productTableProducts"></div>
+    </div>
+
+    <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Products Dashboard</span><span>Line performance overview</span></div>
+  </div>
+
   <!-- Global footer (used as Settings target) -->
   <div class="dash-footer"><span>Clavert Consulting — Interactive Dashboard Demo</span><span>Powered by Real-Time Analytics</span></div>
 </div>
@@ -362,6 +516,15 @@ const sessions=[1890,2340,2100,2560,2280,1340,1120];
 const revenueDetailMonths=['Jan','Feb','Mar','Apr','May','Jun'];
 const revenueDetailMRR=[42000,48000,51000,56000,59000,62400];
 const revenueDetailARR=[504000,576000,612000,672000,708000,748800];
+const customerMonths=['Jan','Feb','Mar','Apr','May','Jun'];
+const activeCustomersSeries=[10200,10850,11320,11840,12310,12847];
+const newCustomersSeries=[620,680,710,730,760,820];
+const customerSegments=[
+  {name:'Enterprise',customers:180,value:8200},
+  {name:'Mid-market',customers:640,value:5200},
+  {name:'SMB',customers:1480,value:2600}
+];
+const productMonths=['Jan','Feb','Mar','Apr','May','Jun'];
 const products=[
   {name:'Enterprise Analytics Suite',sales:234,revenue:'$187,200',growth:23},
   {name:'Data Pipeline Pro',sales:189,revenue:'$151,200',growth:15},
@@ -409,8 +572,8 @@ let activeSheet='overview';
 const sectionMap={
   overview:'.header',
   revenue:'#sheet-revenue',
-  customers:'.stats-grid',
-  products:'.bottom-row',
+  customers:'#sheet-customers',
+  products:'#sheet-products',
   settings:'.dash-footer'
 };
 function renderNav(){
@@ -420,8 +583,8 @@ function renderNav(){
 function setNav(id){
   activeNav=id;
   renderNav();
-  if(id==='revenue'){
-    activeSheet='revenue';
+  if(['overview','revenue','customers','products'].includes(id)){
+    activeSheet=id;
   }else{
     activeSheet='overview';
   }
@@ -528,6 +691,12 @@ document.getElementById('productTable').innerHTML=products.map(p=>`
     <span class="growth ${p.growth>0?'up':'down'}">${svg(p.growth>0?'trending-up':'trending-down',13)}${p.growth>0?'+':''}${p.growth}%</span>
   </div>`).join('');
 
+document.getElementById('productTableProducts').innerHTML=products.map(p=>`
+  <div class="table-row">
+    <span class="name">${p.name}</span><span class="num">${p.sales}</span><span class="rev">${p.revenue}</span>
+    <span class="growth ${p.growth>0?'up':'down'}">${svg(p.growth>0?'trending-up':'trending-down',13)}${p.growth>0?'+':''}${p.growth}%</span>
+  </div>`).join('');
+
 /* ── ACTIVITY FEED ── */
 const actColors={sale:'rgba(152,195,244,.12)',user:'rgba(58,158,110,.08)',alert:'rgba(201,69,69,.07)',product:'rgba(93,118,146,.1)',target:'rgba(152,195,244,.12)'};
 const actIcons={sale:'dollar',user:'users',alert:'activity',product:'package',target:'target'};
@@ -575,6 +744,83 @@ if(revProductCanvas){
       borderRadius:6,
       maxBarThickness:40
     }]},options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+(v/1000)+'k'}}}}});
+}
+
+/* ── CUSTOMERS CHARTS (CUSTOMERS SHEET) ── */
+const customerLifecycleCanvas=document.getElementById('customerLifecycleChart');
+if(customerLifecycleCanvas){
+  customerLifecycleCanvas.width=customerLifecycleCanvas.parentElement.clientWidth;
+  const customerLifecycleCtx=customerLifecycleCanvas.getContext('2d');
+  new Chart(customerLifecycleCtx,{
+    type:'line',
+    data:{
+      labels:customerMonths,
+      datasets:[
+        {label:'Active',data:activeCustomersSeries,borderColor:'#142941',backgroundColor:'rgba(20,41,65,.08)',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
+        {label:'New',data:newCustomersSeries,borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.18)',fill:false,tension:.35,borderWidth:2.5,pointRadius:0}
+      ]
+    },
+    options:chartOpts
+  });
+}
+
+const customerSegmentCanvas=document.getElementById('customerSegmentChart');
+if(customerSegmentCanvas){
+  customerSegmentCanvas.width=customerSegmentCanvas.parentElement.clientWidth;
+  const customerSegmentCtx=customerSegmentCanvas.getContext('2d');
+  new Chart(customerSegmentCtx,{
+    type:'bar',
+    data:{
+      labels:customerSegments.map(s=>s.name),
+      datasets:[
+        {
+          label:'Customers',
+          data:customerSegments.map(s=>s.customers),
+          backgroundColor:'#142941',
+          borderRadius:6,
+          maxBarThickness:40
+        }
+      ]
+    },
+    options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11}}}}}
+  });
+}
+
+/* ── PRODUCTS CHARTS (PRODUCTS SHEET) ── */
+const productShareCanvas=document.getElementById('productShareChart');
+if(productShareCanvas){
+  productShareCanvas.width=productShareCanvas.parentElement.clientWidth;
+  const productShareCtx=productShareCanvas.getContext('2d');
+  new Chart(productShareCtx,{
+    type:'doughnut',
+    data:{
+      labels:products.map(p=>p.name),
+      datasets:[{
+        data:products.map(p=>parseInt(p.revenue.replace(/[^0-9]/g,''),10)),
+        backgroundColor:['#142941','#5D7692','#98C3F4','#CBC9C6','#F7F5F3'],
+        borderWidth:0
+      }]
+    },
+    options:{responsive:false,maintainAspectRatio:false,cutout:'68%',animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}}}
+  });
+}
+
+const productTrendCanvas=document.getElementById('productTrendChart');
+if(productTrendCanvas){
+  productTrendCanvas.width=productTrendCanvas.parentElement.clientWidth;
+  const productTrendCtx=productTrendCanvas.getContext('2d');
+  new Chart(productTrendCtx,{
+    type:'line',
+    data:{
+      labels:productMonths,
+      datasets:[
+        {label:'Enterprise Analytics Suite',data:[28000,29500,30500,31500,32500,35000],borderColor:'#142941',backgroundColor:'rgba(20,41,65,.08)',fill:false,tension:.35,borderWidth:2.2,pointRadius:0},
+        {label:'Data Pipeline Pro',data:[21000,22000,22500,23000,23800,24500],borderColor:'#5D7692',backgroundColor:'rgba(93,118,146,.1)',fill:false,tension:.35,borderWidth:2.2,pointRadius:0},
+        {label:'Dashboard Builder',data:[12000,12500,13000,13500,14000,14500],borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.18)',fill:false,tension:.35,borderWidth:2.2,pointRadius:0}
+      ]
+    },
+    options:chartOpts
+  });
 }
 </script>
 </body>

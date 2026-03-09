@@ -17,6 +17,12 @@
   --success:#3A9E6E;--danger:#C94545;
   --radius:1rem;--radius-sm:0.75rem;
 }
+:root{
+  --navy:#142941;--steel:#5D7692;--sky:#98C3F4;
+  --warm:#CBC9C6;--cream:#F7F5F3;--white:#fff;
+  --success:#3A9E6E;--danger:#C94545;
+  --radius:1rem;--radius-sm:0.75rem;
+}
 html{font-size:15px}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--warm);border-radius:4px}
@@ -48,6 +54,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
 /* ═══ MAIN ═══ */
 .main{flex:1;padding:1.4rem 1.8rem;overflow-y:auto}
+.sheet{display:none}
+.sheet.active{display:block}
+:root{
+  --navy:#142941;--steel:#5D7692;--sky:#98C3F4;
+  --warm:#CBC9C6;--cream:#F7F5F3;--white:#fff;
+  --success:#3A9E6E;--danger:#C94545;
+  --radius:1rem;--radius-sm:0.75rem;
+}
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;animation:fadeUp .5s ease both}
 .header h1{font-size:1.75rem;font-weight:700;letter-spacing:-.03em;color:var(--navy)}
 .header p{color:var(--steel);font-size:.8rem;margin-top:.15rem}
@@ -148,56 +162,147 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
 <!-- ═══════ MAIN ═══════ -->
 <div class="main">
-  <!-- Header -->
-  <div class="header">
-    <div><h1>Business Overview</h1><p>Real-time analytics & performance insights</p></div>
-    <div class="header-actions">
-      <div class="time-pills" id="timePills"></div>
-      <button class="bell-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5D7692" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="bell-dot"></span></button>
-    </div>
-  </div>
-
-  <!-- Stat Cards -->
-  <div class="stats-grid" id="statsGrid"></div>
-
-  <!-- Charts Row -->
-  <div class="charts-row">
-    <div class="card anim d5">
-      <div class="card-header">
-        <div><div class="card-title">Revenue & Profit</div><div class="card-subtitle">Monthly performance — <span id="rangeLabel">12M</span></div></div>
-        <div class="legend"><span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Revenue</span><span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>Profit</span></div>
+  <!-- Overview sheet -->
+  <div class="sheet sheet-overview active" id="sheet-overview">
+    <!-- Header -->
+    <div class="header">
+      <div><h1>Business Overview</h1><p>Real-time analytics & performance insights</p></div>
+      <div class="header-actions">
+        <div class="time-pills" id="timePills"></div>
+        <button class="bell-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5D7692" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="bell-dot"></span></button>
       </div>
-      <div style="position:relative;height:160px"><canvas id="revenueChart"></canvas></div>
     </div>
-    <div class="card dark anim d6">
-      <div class="card-header"><div><div class="card-title">Acquisition Channels</div><div class="card-subtitle">Traffic source distribution</div></div></div>
-      <canvas id="channelChart" height="155"></canvas>
-      <div class="channel-list" id="channelList"></div>
+
+    <!-- Stat Cards -->
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+      <div class="card anim d5">
+        <div class="card-header">
+          <div><div class="card-title">Revenue & Profit</div><div class="card-subtitle">Monthly performance — <span id="rangeLabel">12M</span></div></div>
+          <div class="legend"><span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Revenue</span><span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>Profit</span></div>
+        </div>
+        <div style="position:relative;height:160px"><canvas id="revenueChart"></canvas></div>
+      </div>
+      <div class="card dark anim d6">
+        <div class="card-header"><div><div class="card-title">Acquisition Channels</div><div class="card-subtitle">Traffic source distribution</div></div></div>
+        <canvas id="channelChart" height="155"></canvas>
+        <div class="channel-list" id="channelList"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="bottom-row">
+      <div class="card anim d7">
+        <div class="card-header"><div class="card-title">Top Products</div><button class="view-btn">View all</button></div>
+        <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
+        <div id="productTable"></div>
+      </div>
+      <div class="card anim d8">
+        <div class="card-header" style="align-items:center"><div class="card-title">Recent Activity</div><div class="live-dot"></div></div>
+        <div id="activityFeed"></div>
+      </div>
+    </div>
+
+    <!-- Weekly Traffic -->
+    <div class="card anim d8" style="margin-bottom:1rem">
+      <div class="card-header">
+        <div><div class="card-title">Weekly Traffic</div><div class="card-subtitle">Visitors & sessions by day</div></div>
+        <div class="legend"><span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Visitors</span><span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>Sessions</span></div>
+      </div>
+      <canvas id="trafficChart" height="170"></canvas>
     </div>
   </div>
 
-  <!-- Bottom Row -->
-  <div class="bottom-row">
-    <div class="card anim d7">
-      <div class="card-header"><div class="card-title">Top Products</div><button class="view-btn">View all</button></div>
-      <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
-      <div id="productTable"></div>
+  <!-- Revenue sheet -->
+  <div class="sheet sheet-revenue" id="sheet-revenue">
+    <div class="header">
+      <div><h1>Revenue Dashboard</h1><p>Pipeline, subscriptions & product performance</p></div>
     </div>
-    <div class="card anim d8">
-      <div class="card-header" style="align-items:center"><div class="card-title">Recent Activity</div><div class="live-dot"></div></div>
-      <div id="activityFeed"></div>
+
+    <div class="stats-grid">
+      <div class="stat-card anim d1">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(152,195,244,.12)"></div>
+          <div class="stat-badge up">+18.4%</div>
+        </div>
+        <div class="stat-label">MRR</div>
+        <div class="stat-value">$82,400</div>
+      </div>
+      <div class="stat-card anim d2">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(58,158,110,.08)"></div>
+          <div class="stat-badge up">+9.2%</div>
+        </div>
+        <div class="stat-label">Paying Customers</div>
+        <div class="stat-value">2,318</div>
+      </div>
+      <div class="stat-card anim d3">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(93,118,146,.1)"></div>
+          <div class="stat-badge up">96.3%</div>
+        </div>
+        <div class="stat-label">Quota Attainment</div>
+        <div class="stat-value">96%</div>
+      </div>
+      <div class="stat-card anim d4">
+        <div class="stat-top">
+          <div class="stat-icon" style="background:rgba(201,69,69,.06)"></div>
+          <div class="stat-badge down">-3.1%</div>
+        </div>
+        <div class="stat-label">Churn Rate</div>
+        <div class="stat-value">2.7%</div>
+      </div>
     </div>
+
+    <div class="charts-row" style="margin-top:1rem">
+      <div class="card anim d5">
+        <div class="card-header">
+          <div><div class="card-title">MRR vs ARR</div><div class="card-subtitle">Subscription revenue over time</div></div>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>MRR</span>
+            <span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>ARR</span>
+          </div>
+        </div>
+        <div style="position:relative;height:170px"><canvas id="revenueDetailChart"></canvas></div>
+      </div>
+      <div class="card anim d6">
+        <div class="card-header">
+          <div><div class="card-title">Revenue by Product</div><div class="card-subtitle">Last 90 days</div></div>
+        </div>
+        <div style="position:relative;height:170px"><canvas id="revenueProductChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card anim d7" style="margin-top:1rem">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Top Opportunities</div>
+          <div class="card-subtitle">Active pipeline this quarter</div>
+        </div>
+      </div>
+      <div class="table-header"><span>Account</span><span>Stage</span><span>Value</span><span>Close prob.</span></div>
+      <div id="revenueOpportunities">
+        <div class="table-row">
+          <span class="name">Acme Global</span><span class="num">Proposal</span><span class="rev">$64,000</span><span class="growth up">75%</span>
+        </div>
+        <div class="table-row">
+          <span class="name">Nimbus Analytics</span><span class="num">Negotiation</span><span class="rev">$42,500</span><span class="growth up">68%</span>
+        </div>
+        <div class="table-row">
+          <span class="name">Studio Nord</span><span class="num">Discovery</span><span class="rev">$18,200</span><span class="growth up">54%</span>
+        </div>
+        <div class="table-row">
+          <span class="name">Brightside Health</span><span class="num">Proposal</span><span class="rev">$27,900</span><span class="growth down">39%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Revenue Dashboard</span><span>Pipeline & subscriptions overview</span></div>
   </div>
 
-  <!-- Weekly Traffic -->
-  <div class="card anim d8" style="margin-bottom:1rem">
-    <div class="card-header">
-      <div><div class="card-title">Weekly Traffic</div><div class="card-subtitle">Visitors & sessions by day</div></div>
-      <div class="legend"><span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Visitors</span><span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>Sessions</span></div>
-    </div>
-    <canvas id="trafficChart" height="170"></canvas>
-  </div>
-
+  <!-- Global footer (used as Settings target) -->
   <div class="dash-footer"><span>Clavert Consulting — Interactive Dashboard Demo</span><span>Powered by Real-Time Analytics</span></div>
 </div>
 
@@ -220,8 +325,8 @@ const rangeData={
     revenue:[78,82,91].map(v=>v*1000),
     profit:[38,40,46].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:91000,prefix:'$',change:'+16.7%',up:true,bg:'rgba(152,195,244,.12)'},
-      {icon:'users',label:'Active Users',value:12847,prefix:'',change:'+9.3%',up:true,bg:'rgba(58,158,110,.08)'},
+      {icon:'dollar',label:'Total Revenue',value:245000,prefix:'$',change:'+16.7%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'users',label:'Active Users',value:3620,prefix:'',change:'+9.3%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:1124,prefix:'',change:'+11.2%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:4.1,prefix:'',suffix:'%',change:'+0.5%',up:true,bg:'rgba(58,158,110,.08)'}
     ]
@@ -231,8 +336,8 @@ const rangeData={
     revenue:[20,23,22,26].map(v=>v*1000),
     profit:[10,11,10,15].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:91000,prefix:'$',change:'+11.0%',up:true,bg:'rgba(152,195,244,.12)'},
-      {icon:'users',label:'Active Users',value:12847,prefix:'',change:'+4.8%',up:true,bg:'rgba(58,158,110,.08)'},
+      {icon:'dollar',label:'Total Revenue',value:92000,prefix:'$',change:'+11.0%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'users',label:'Active Users',value:1180,prefix:'',change:'+4.8%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:398,prefix:'',change:'+6.1%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:3.6,prefix:'',suffix:'%',change:'-0.8%',up:false,bg:'rgba(201,69,69,.06)'}
     ]
@@ -242,8 +347,8 @@ const rangeData={
     revenue:[12.4,13.8,11.9,14.2,15.1,9.8,8.6].map(v=>v*1000),
     profit:[5.8,6.4,5.2,6.9,7.3,4.1,3.5].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:91000,prefix:'$',change:'+5.2%',up:true,bg:'rgba(152,195,244,.12)'},
-      {icon:'users',label:'Active Users',value:12847,prefix:'',change:'+2.1%',up:true,bg:'rgba(58,158,110,.08)'},
+      {icon:'dollar',label:'Total Revenue',value:31800,prefix:'$',change:'+5.2%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'users',label:'Active Users',value:430,prefix:'',change:'+2.1%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:96,prefix:'',change:'+3.4%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:4.2,prefix:'',suffix:'%',change:'+0.6%',up:true,bg:'rgba(58,158,110,.08)'}
     ]
@@ -254,6 +359,9 @@ const channels=[{n:'Organic',v:42,c:'#142941'},{n:'Paid',v:28,c:'#98C3F4'},{n:'S
 const weekDays=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const visitors=[1240,1580,1420,1680,1520,890,760];
 const sessions=[1890,2340,2100,2560,2280,1340,1120];
+const revenueDetailMonths=['Jan','Feb','Mar','Apr','May','Jun'];
+const revenueDetailMRR=[42000,48000,51000,56000,59000,62400];
+const revenueDetailARR=[504000,576000,612000,672000,708000,748800];
 const products=[
   {name:'Enterprise Analytics Suite',sales:234,revenue:'$187,200',growth:23},
   {name:'Data Pipeline Pro',sales:189,revenue:'$151,200',growth:15},
@@ -270,12 +378,9 @@ const activities=[
 ];
 const navItems=[
   {icon:'layers',label:'Overview',id:'overview'},
-  {icon:'bar-chart',label:'Analytics',id:'analytics'},
   {icon:'dollar',label:'Revenue',id:'revenue'},
   {icon:'users',label:'Customers',id:'customers'},
   {icon:'cart',label:'Products',id:'products'},
-  {icon:'globe',label:'Channels',id:'channels'},
-  {icon:'target',label:'Goals',id:'goals'},
   {icon:'settings',label:'Settings',id:'settings'}
 ];
 
@@ -300,13 +405,29 @@ function svg(name,size=17){return `<svg width="${size}" height="${size}" viewBox
 
 /* ── SIDEBAR ── */
 let activeNav='overview';
-const sectionMap={overview:'.header',analytics:'.charts-row',revenue:'.charts-row',customers:'.stats-grid',products:'.bottom-row',channels:'.charts-row',goals:'.stats-grid',settings:'.dash-footer'};
+let activeSheet='overview';
+const sectionMap={
+  overview:'.header',
+  revenue:'#sheet-revenue',
+  customers:'.stats-grid',
+  products:'.bottom-row',
+  settings:'.dash-footer'
+};
 function renderNav(){
   const el=document.getElementById('navItems');
   el.innerHTML=navItems.map(n=>`<button class="nav-btn${n.id===activeNav?' active':''}" onclick="setNav('${n.id}')">${svg(n.icon)}<span class="nav-label">${n.label}</span>${n.id===activeNav?'<span class="nav-dot"></span>':''}</button>`).join('');
 }
 function setNav(id){
-  activeNav=id;renderNav();
+  activeNav=id;
+  renderNav();
+  if(id==='revenue'){
+    activeSheet='revenue';
+  }else{
+    activeSheet='overview';
+  }
+  document.querySelectorAll('.sheet').forEach(s=>{
+    s.classList.toggle('active',s.id==='sheet-'+activeSheet);
+  });
   const target=document.querySelector(sectionMap[id]||'.header');
   if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -316,7 +437,9 @@ function toggleSidebar(){
   ic.setAttribute('d',sb.classList.contains('collapsed')?'M9 18l6-6-6-6':'M15 18l-6-6 6-6');
 }
 renderNav();
-
+document.querySelectorAll('.sheet').forEach(s=>{
+  s.classList.toggle('active',s.id==='sheet-overview');
+});
 /* ── TIME PILLS ── */
 let activeRange='12M';
 function renderPills(){
@@ -357,26 +480,31 @@ function renderStats(){
 renderStats();
 
 /* ── REVENUE CHART ── */
-const revCtx=document.getElementById('revenueChart').getContext('2d');
+const revCanvas=document.getElementById('revenueChart');
+revCanvas.width=revCanvas.parentElement.clientWidth;
+const revCtx=revCanvas.getContext('2d');
 function makeGradients(ctx,h){
   const rg=ctx.createLinearGradient(0,0,0,h);rg.addColorStop(0,'rgba(20,41,65,.08)');rg.addColorStop(1,'rgba(20,41,65,0)');
   const pg=ctx.createLinearGradient(0,0,0,h);pg.addColorStop(0,'rgba(152,195,244,.18)');pg.addColorStop(1,'rgba(152,195,244,0)');
   return[rg,pg];
 }
-const chartOpts={responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
-  animation:{duration:600,easing:'easeOutQuart'},
+const chartOpts={responsive:false,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
+  animation:false,
   plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:12,titleFont:{size:10,weight:600},bodyFont:{size:13},callbacks:{label:ctx=>`${ctx.dataset.label}: $${(ctx.parsed.y/1000).toFixed(1)}k`}}},
   scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+v/1000+'k'}}}};
 const[revGrad0,profGrad0]=makeGradients(revCtx,160);
 const revChart=new Chart(revCtx,{type:'line',data:{labels:rangeData['12M'].labels,datasets:[
-  {label:'Revenue',data:rangeData['12M'].revenue,borderColor:'#142941',backgroundColor:revGrad0,fill:true,tension:.4,borderWidth:2.5,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:'#142941',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2},
-  {label:'Profit',data:rangeData['12M'].profit,borderColor:'#98C3F4',backgroundColor:profGrad0,fill:true,tension:.4,borderWidth:2.5,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:'#98C3F4',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2}
-]},options:{...chartOpts,plugins:{...chartOpts.plugins,beforeDraw(chart){
-  const h=chart.chartArea?.height||160;
-  const[rg,pg]=makeGradients(chart.ctx,h);
-  chart.data.datasets[0].backgroundColor=rg;
-  chart.data.datasets[1].backgroundColor=pg;
-}}}});
+  {label:'Revenue',data:rangeData['12M'].revenue,borderColor:'#142941',backgroundColor:revGrad0,fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#142941',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2},
+  {label:'Profit',data:rangeData['12M'].profit,borderColor:'#98C3F4',backgroundColor:profGrad0,fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#98C3F4',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2}
+]},options:{...chartOpts,
+  layout:{padding:{left:10,right:24,top:8,bottom:10}},
+  plugins:{...chartOpts.plugins,beforeDraw(chart){
+    const h=chart.chartArea?.height||160;
+    const[rg,pg]=makeGradients(chart.ctx,h);
+    chart.data.datasets[0].backgroundColor=rg;
+    chart.data.datasets[1].backgroundColor=pg;
+  }}
+}});
 
 function updateRevenueChart(){
   const d=rangeData[activeRange];
@@ -387,8 +515,10 @@ function updateRevenueChart(){
 }
 
 /* ── CHANNEL PIE ── */
-const chCtx=document.getElementById('channelChart').getContext('2d');
-new Chart(chCtx,{type:'doughnut',data:{labels:channels.map(c=>c.n),datasets:[{data:channels.map(c=>c.v),backgroundColor:channels.map(c=>c.c),borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',animation:{duration:800},plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}}}});
+const chCanvas=document.getElementById('channelChart');
+chCanvas.width=chCanvas.parentElement.clientWidth;
+const chCtx=chCanvas.getContext('2d');
+new Chart(chCtx,{type:'doughnut',data:{labels:channels.map(c=>c.n),datasets:[{data:channels.map(c=>c.v),backgroundColor:channels.map(c=>c.c),borderWidth:0,hoverOffset:6}]},options:{responsive:false,maintainAspectRatio:false,cutout:'68%',animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}}}});
 document.getElementById('channelList').innerHTML=channels.map(c=>`<div class="channel-item"><span class="channel-dot" style="background:${c.c}"></span><span class="channel-name">${c.n}</span><span class="channel-val">${c.v}%</span></div>`).join('');
 
 /* ── PRODUCTS TABLE ── */
@@ -409,11 +539,43 @@ document.getElementById('activityFeed').innerHTML=activities.map(a=>`
   </div>`).join('');
 
 /* ── TRAFFIC BAR CHART ── */
-const trCtx=document.getElementById('trafficChart').getContext('2d');
+const trCanvas=document.getElementById('trafficChart');
+trCanvas.width=trCanvas.parentElement.clientWidth;
+const trCtx=trCanvas.getContext('2d');
 new Chart(trCtx,{type:'bar',data:{labels:weekDays,datasets:[
-  {label:'Visitors',data:visitors,backgroundColor:'#142941',borderRadius:5,maxBarThickness:32},
-  {label:'Sessions',data:sessions,backgroundColor:'#98C3F4',borderRadius:5,maxBarThickness:32}
-]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11}}}}}});
+  {label:'Visitors',data:visitors,backgroundColor:'#142941',borderRadius:6,maxBarThickness:46,barPercentage:.85,categoryPercentage:.8},
+  {label:'Sessions',data:sessions,backgroundColor:'#98C3F4',borderRadius:6,maxBarThickness:46,barPercentage:.85,categoryPercentage:.8}
+]},options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11}}}}}});
+
+/* ── REVENUE DETAIL CHARTS (REVENUE SHEET) ── */
+const revDetailCanvas=document.getElementById('revenueDetailChart');
+if(revDetailCanvas){
+  revDetailCanvas.width=revDetailCanvas.parentElement.clientWidth;
+  const revDetailCtx=revDetailCanvas.getContext('2d');
+  new Chart(revDetailCtx,{
+    type:'line',
+    data:{labels:revenueDetailMonths,datasets:[
+      {label:'MRR',data:revenueDetailMRR,borderColor:'#142941',backgroundColor:'rgba(20,41,65,.08)',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
+      {label:'ARR',data:revenueDetailARR,borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.18)',fill:false,tension:.35,borderWidth:2.5,pointRadius:0}
+    ]},
+    options:chartOpts
+  });
+}
+
+const revProductCanvas=document.getElementById('revenueProductChart');
+if(revProductCanvas){
+  revProductCanvas.width=revProductCanvas.parentElement.clientWidth;
+  const revProductCtx=revProductCanvas.getContext('2d');
+  new Chart(revProductCtx,{type:'bar',data:{labels:[
+      'Enterprise Analytics','Data Pipeline','Dashboard Builder','API Kit'
+    ],datasets:[{
+      label:'Revenue',
+      data:[187200,151200,93600,67000],
+      backgroundColor:['#142941','#5D7692','#98C3F4','#CBC9C6'],
+      borderRadius:6,
+      maxBarThickness:40
+    }]},options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+(v/1000)+'k'}}}}});
+}
 </script>
 </body>
 </html>

@@ -17,14 +17,8 @@
   --success:#3A9E6E;--danger:#C94545;
   --radius:1rem;--radius-sm:0.75rem;
 }
-:root{
-  --navy:#142941;--steel:#5D7692;--sky:#98C3F4;
-  --warm:#CBC9C6;--cream:#F7F5F3;--white:#fff;
-  --success:#3A9E6E;--danger:#C94545;
-  --radius:1rem;--radius-sm:0.75rem;
-}
-html{font-size:15px}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden}
+html{font-size:15px;height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--navy);display:flex;height:100vh;overflow:hidden}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--warm);border-radius:4px}
 
 /* ═══ SIDEBAR ═══ */
@@ -53,15 +47,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .collapsed .collapse-label{display:none}
 
 /* ═══ MAIN ═══ */
-.main{flex:1;padding:1.4rem 1.8rem;overflow-y:auto}
+.main{flex:1;padding:1.4rem 1.8rem;overflow-y:auto;min-width:0}
 .sheet{display:none}
 .sheet.active{display:block}
-:root{
-  --navy:#142941;--steel:#5D7692;--sky:#98C3F4;
-  --warm:#CBC9C6;--cream:#F7F5F3;--white:#fff;
-  --success:#3A9E6E;--danger:#C94545;
-  --radius:1rem;--radius-sm:0.75rem;
-}
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;animation:fadeUp .5s ease both}
 .header h1{font-size:1.75rem;font-weight:700;letter-spacing:-.03em;color:var(--navy)}
 .header p{color:var(--steel);font-size:.8rem;margin-top:.15rem}
@@ -134,15 +122,84 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
 /* ═══ ANIMATIONS ═══ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}60%{opacity:0;transform:scale(2.6)}100%{opacity:0;transform:scale(2.6)}}
+@keyframes pulse{0%{opacity:1;transform:scale(1)}60%,100%{opacity:0;transform:scale(2.6)}}
 .bell-dot,.live-dot{will-change:opacity,transform;overflow:visible}
 .anim{animation:fadeUp .55s ease both}
 .d1{animation-delay:.08s}.d2{animation-delay:.12s}.d3{animation-delay:.16s}.d4{animation-delay:.2s}
 .d5{animation-delay:.25s}.d6{animation-delay:.3s}.d7{animation-delay:.35s}.d8{animation-delay:.4s}
 
+/* ═══ SETTINGS ═══ */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+.settings-section{display:flex;flex-direction:column}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--cream)}
+.settings-row:last-child{border-bottom:none}
+.settings-label{font-size:.82rem;font-weight:500;color:var(--navy);line-height:1.3}
+.settings-desc{font-size:.7rem;color:var(--steel);margin-top:.15rem}
+.toggle{position:relative;width:38px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--warm);border-radius:11px;cursor:pointer;transition:.2s}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.toggle input:checked+.toggle-slider{background:var(--navy)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(16px)}
+.select-sm{background:var(--cream);border:1px solid var(--warm);border-radius:.45rem;padding:5px 10px;font-size:.75rem;color:var(--navy);font-family:inherit;cursor:pointer;outline:none}
+.select-sm:focus{border-color:var(--steel)}
+.settings-about{display:flex;flex-direction:column;gap:.5rem}
+.about-row{display:flex;justify-content:space-between;font-size:.8rem;padding:.4rem 0;border-bottom:1px solid var(--cream)}
+.about-row:last-child{border-bottom:none}
+.about-key{color:var(--steel);font-weight:500}
+.about-val{color:var(--navy);font-weight:600}
+.save-btn{margin-top:1.2rem;padding:.6rem 1.6rem;background:var(--navy);color:var(--cream);border:none;border-radius:.6rem;font-size:.8rem;font-weight:600;font-family:inherit;cursor:pointer;letter-spacing:.04em;transition:background .15s}
+.save-btn:hover{background:var(--steel)}
+
+/* ═══ MOBILE BOTTOM NAV ═══ */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:58px;background:var(--navy);z-index:200;border-top:1px solid rgba(255,255,255,.08)}
+.mobile-nav-inner{display:flex;height:100%}
+.mobile-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:transparent;color:var(--steel);cursor:pointer;font-family:inherit;font-size:.5rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;transition:color .15s;-webkit-tap-highlight-color:transparent;padding:4px 0;min-width:0}
+.mobile-nav-btn.active{color:var(--sky)}
+.mobile-nav-btn svg{width:20px;height:20px;flex-shrink:0}
+.mobile-nav-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;padding:0 2px}
+
+/* ═══ OVERVIEW CHART WRAPPERS — responsive height ═══ */
+.rev-chart-wrap{position:relative;height:185px}
+.chn-chart-wrap{position:relative;height:155px}
+
+/* ═══ TABLE SCROLL ═══ */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll .table-header,.table-scroll .table-row{min-width:360px}
+
 /* ═══ RESPONSIVE ═══ */
-@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.charts-row,.bottom-row{grid-template-columns:1fr}}
-@media(max-width:700px){.sidebar{display:none}.main{padding:1rem}}
+@media(max-width:1100px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-row,.bottom-row,.settings-grid{grid-template-columns:1fr}
+  .rev-chart-wrap{height:220px}
+  .chn-chart-wrap{height:200px}
+}
+@media(max-width:700px){
+  .sidebar{display:none}
+  .mobile-nav{display:block}
+  .main{padding:.85rem 1rem 70px}
+  .rev-chart-wrap{height:200px}
+  .chn-chart-wrap{height:180px}
+  .header{flex-wrap:wrap;gap:.6rem;margin-bottom:1rem}
+  .header h1{font-size:1.3rem}
+  .header p{font-size:.75rem}
+  .header-actions{width:100%;justify-content:space-between}
+  .time-pills{flex:1}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.55rem;margin-bottom:.9rem}
+  .stat-card{padding:.9rem 1rem}
+  .stat-value{font-size:1.25rem}
+  .stat-label{font-size:.62rem}
+  .card{padding:1rem}
+  .charts-row,.bottom-row,.settings-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:.9rem}
+  .card-title{font-size:.88rem}
+  .channel-list{grid-template-columns:1fr 1fr}
+  .dash-footer{font-size:.58rem;flex-direction:column;gap:.2rem;padding:.8rem 0 .3rem}
+}
+@media(max-width:420px){
+  .stats-grid{grid-template-columns:1fr}
+  .header h1{font-size:1.15rem}
+  .stat-value{font-size:1.35rem}
+}
 </style>
 </head>
 <body>
@@ -183,11 +240,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <div><div class="card-title">Revenue & Profit</div><div class="card-subtitle">Monthly performance — <span id="rangeLabel">12M</span></div></div>
           <div class="legend"><span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Revenue</span><span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>Profit</span></div>
         </div>
-        <div style="position:relative;height:160px"><canvas id="revenueChart"></canvas></div>
+        <div class="rev-chart-wrap"><canvas id="revenueChart"></canvas></div>
       </div>
       <div class="card dark anim d6">
         <div class="card-header"><div><div class="card-title">Acquisition Channels</div><div class="card-subtitle">Traffic source distribution</div></div></div>
-        <canvas id="channelChart" height="155"></canvas>
+        <div class="chn-chart-wrap"><canvas id="channelChart"></canvas></div>
         <div class="channel-list" id="channelList"></div>
       </div>
     </div>
@@ -196,8 +253,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="bottom-row">
       <div class="card anim d7">
         <div class="card-header"><div class="card-title">Top Products</div><button class="view-btn">View all</button></div>
-        <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
-        <div id="productTable"></div>
+        <div class="table-scroll">
+          <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
+          <div id="productTable"></div>
+        </div>
       </div>
       <div class="card anim d8">
         <div class="card-header" style="align-items:center"><div class="card-title">Recent Activity</div><div class="live-dot"></div></div>
@@ -211,8 +270,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div><div class="card-title">Weekly Traffic</div><div class="card-subtitle">Visitors & sessions by day</div></div>
         <div class="legend"><span class="legend-item"><span class="legend-dot" style="background:var(--navy)"></span>Visitors</span><span class="legend-item"><span class="legend-dot" style="background:var(--sky)"></span>Sessions</span></div>
       </div>
-      <canvas id="trafficChart" height="170"></canvas>
+      <div style="position:relative;height:170px"><canvas id="trafficChart"></canvas></div>
     </div>
+
+    <div class="dash-footer" style="margin-top:1rem;justify-content:center"><span>Interactive Dashboard Demo — Powered by Clavert Consulting</span></div>
   </div>
 
   <!-- Revenue sheet -->
@@ -224,31 +285,31 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="stats-grid">
       <div class="stat-card anim d1">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(152,195,244,.12)"></div>
-          <div class="stat-badge up">+18.4%</div>
+          <div class="stat-icon" style="background:rgba(152,195,244,.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="stat-badge up">+26.4%</div>
         </div>
         <div class="stat-label">MRR</div>
-        <div class="stat-value">$82,400</div>
+        <div class="stat-value">$91,000</div>
       </div>
       <div class="stat-card anim d2">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(58,158,110,.08)"></div>
-          <div class="stat-badge up">+9.2%</div>
+          <div class="stat-icon" style="background:rgba(58,158,110,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="stat-badge up">+6.8%</div>
         </div>
         <div class="stat-label">Paying Customers</div>
-        <div class="stat-value">2,318</div>
+        <div class="stat-value">1,828</div>
       </div>
       <div class="stat-card anim d3">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(93,118,146,.1)"></div>
-          <div class="stat-badge up">96.3%</div>
+          <div class="stat-icon" style="background:rgba(93,118,146,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="stat-badge up">+2.4pp</div>
         </div>
         <div class="stat-label">Quota Attainment</div>
         <div class="stat-value">96%</div>
       </div>
       <div class="stat-card anim d4">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(201,69,69,.06)"></div>
+          <div class="stat-icon" style="background:rgba(201,69,69,.06)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></div>
           <div class="stat-badge down">-3.1%</div>
         </div>
         <div class="stat-label">Churn Rate</div>
@@ -282,24 +343,26 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <div class="card-subtitle">Active pipeline this quarter</div>
         </div>
       </div>
-      <div class="table-header"><span>Account</span><span>Stage</span><span>Value</span><span>Close prob.</span></div>
-      <div id="revenueOpportunities">
-        <div class="table-row">
-          <span class="name">Acme Global</span><span class="num">Proposal</span><span class="rev">$64,000</span><span class="growth up">75%</span>
-        </div>
-        <div class="table-row">
-          <span class="name">Nimbus Analytics</span><span class="num">Negotiation</span><span class="rev">$42,500</span><span class="growth up">68%</span>
-        </div>
-        <div class="table-row">
-          <span class="name">Studio Nord</span><span class="num">Discovery</span><span class="rev">$18,200</span><span class="growth up">54%</span>
-        </div>
-        <div class="table-row">
-          <span class="name">Brightside Health</span><span class="num">Proposal</span><span class="rev">$27,900</span><span class="growth down">39%</span>
+      <div class="table-scroll">
+        <div class="table-header"><span>Account</span><span>Stage</span><span>Value</span><span>Close prob.</span></div>
+        <div id="revenueOpportunities">
+          <div class="table-row">
+            <span class="name">Acme Global</span><span class="num">Proposal</span><span class="rev">$64,000</span><span class="growth up">75%</span>
+          </div>
+          <div class="table-row">
+            <span class="name">Nimbus Analytics</span><span class="num">Negotiation</span><span class="rev">$42,500</span><span class="growth up">68%</span>
+          </div>
+          <div class="table-row">
+            <span class="name">Studio Nord</span><span class="num">Discovery</span><span class="rev">$18,200</span><span class="growth up">54%</span>
+          </div>
+          <div class="table-row">
+            <span class="name">Brightside Health</span><span class="num">Proposal</span><span class="rev">$27,900</span><span class="growth down">39%</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Revenue Dashboard</span><span>Pipeline & subscriptions overview</span></div>
+    <div class="dash-footer" style="margin-top:1rem;justify-content:center"><span>Interactive Dashboard Demo — Powered by Clavert Consulting</span></div>
   </div>
 
   <!-- Customers sheet -->
@@ -311,7 +374,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="stats-grid">
       <div class="stat-card anim d1">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(58,158,110,.08)"></div>
+          <div class="stat-icon" style="background:rgba(58,158,110,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <div class="stat-badge up">+12.1%</div>
         </div>
         <div class="stat-label">Active Customers</div>
@@ -319,7 +382,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="stat-card anim d2">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(152,195,244,.12)"></div>
+          <div class="stat-icon" style="background:rgba(152,195,244,.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></div>
           <div class="stat-badge up">+6.4%</div>
         </div>
         <div class="stat-label">New This Month</div>
@@ -327,7 +390,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="stat-card anim d3">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(93,118,146,.1)"></div>
+          <div class="stat-icon" style="background:rgba(93,118,146,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
           <div class="stat-badge up">+4.3</div>
         </div>
         <div class="stat-label">NPS Score</div>
@@ -335,7 +398,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="stat-card anim d4">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(201,69,69,.06)"></div>
+          <div class="stat-icon" style="background:rgba(201,69,69,.06)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></div>
           <div class="stat-badge down">-0.6%</div>
         </div>
         <div class="stat-label">Monthly Churn</div>
@@ -369,21 +432,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <div class="card-subtitle">Retention and expansion focus</div>
         </div>
       </div>
-      <div class="table-header"><span>Cohort</span><span>Customers</span><span>MRR</span><span>Retention</span></div>
-      <div>
-        <div class="table-row">
-          <span class="name">2023 Enterprise</span><span class="num">96</span><span class="rev">$48,400</span><span class="growth up">94%</span>
-        </div>
-        <div class="table-row">
-          <span class="name">2023 Mid-market</span><span class="num">312</span><span class="rev">$27,900</span><span class="growth up">91%</span>
-        </div>
-        <div class="table-row">
-          <span class="name">2024 Product-led</span><span class="num">1,420</span><span class="rev">$18,600</span><span class="growth up">88%</span>
+      <div class="table-scroll">
+        <div class="table-header"><span>Cohort</span><span>Customers</span><span>MRR</span><span>Retention</span></div>
+        <div>
+          <div class="table-row">
+            <span class="name">2023 Enterprise</span><span class="num">96</span><span class="rev">$47,000</span><span class="growth up">94%</span>
+          </div>
+          <div class="table-row">
+            <span class="name">2023 Mid-market</span><span class="num">312</span><span class="rev">$27,000</span><span class="growth up">91%</span>
+          </div>
+          <div class="table-row">
+            <span class="name">2024 Product-led</span><span class="num">1,420</span><span class="rev">$17,000</span><span class="growth up">88%</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Customers Dashboard</span><span>Retention & expansion insights</span></div>
+    <div class="dash-footer" style="margin-top:1rem;justify-content:center"><span>Interactive Dashboard Demo — Powered by Clavert Consulting</span></div>
   </div>
 
   <!-- Products sheet -->
@@ -395,7 +460,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="stats-grid">
       <div class="stat-card anim d1">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(152,195,244,.12)"></div>
+          <div class="stat-icon" style="background:rgba(152,195,244,.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
           <div class="stat-badge up">+23%</div>
         </div>
         <div class="stat-label">Top Product Revenue</div>
@@ -403,15 +468,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="stat-card anim d2">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(93,118,146,.1)"></div>
-          <div class="stat-badge up">5</div>
+          <div class="stat-icon" style="background:rgba(93,118,146,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+          <div class="stat-badge up">+0</div>
         </div>
         <div class="stat-label">Active Products</div>
         <div class="stat-value">5</div>
       </div>
       <div class="stat-card anim d3">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(58,158,110,.08)"></div>
+          <div class="stat-icon" style="background:rgba(58,158,110,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
           <div class="stat-badge up">+8.7%</div>
         </div>
         <div class="stat-label">Total Sales</div>
@@ -419,7 +484,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="stat-card anim d4">
         <div class="stat-top">
-          <div class="stat-icon" style="background:rgba(201,69,69,.06)"></div>
+          <div class="stat-icon" style="background:rgba(201,69,69,.06)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></div>
           <div class="stat-badge down">-5%</div>
         </div>
         <div class="stat-label">At-Risk Line</div>
@@ -438,7 +503,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="card-header">
           <div><div class="card-title">Top Products over Time</div><div class="card-subtitle">MRR by month</div></div>
         </div>
-        <div style="position:relative;height:170px"><canvas id="productTrendChart"></canvas></div>
+        <div style="position:relative;height:210px"><canvas id="productTrendChart"></canvas></div>
       </div>
     </div>
 
@@ -446,29 +511,135 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card-header">
         <div>
           <div class="card-title">Product Performance</div>
-          <div class="card-subtitle">Same data as overview</div>
+          <div class="card-subtitle">Sales & revenue by product line</div>
         </div>
       </div>
-      <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
-      <div id="productTableProducts"></div>
+      <div class="table-scroll">
+        <div class="table-header"><span>Product</span><span>Sales</span><span>Revenue</span><span>Growth</span></div>
+        <div id="productTableProducts"></div>
+      </div>
     </div>
 
-    <div class="dash-footer" style="margin-top:1rem"><span>Clavert Consulting — Products Dashboard</span><span>Line performance overview</span></div>
+    <div class="dash-footer" style="margin-top:1rem;justify-content:center"><span>Interactive Dashboard Demo — Powered by Clavert Consulting</span></div>
   </div>
 
-  <!-- Global footer (used as Settings target) -->
-  <div class="dash-footer"><span>Clavert Consulting — Interactive Dashboard Demo</span><span>Powered by Real-Time Analytics</span></div>
+  <!-- Settings sheet -->
+  <div class="sheet sheet-settings" id="sheet-settings">
+    <div class="header">
+      <div><h1>Settings</h1><p>Customise your dashboard experience</p></div>
+    </div>
+
+    <div class="settings-grid">
+      <!-- Display -->
+      <div class="card anim d1">
+        <div class="card-header"><div class="card-title">Display</div></div>
+        <div class="settings-section">
+          <div class="settings-row">
+            <div><div class="settings-label">Compact sidebar</div><div class="settings-desc">Collapse the sidebar by default</div></div>
+            <label class="toggle"><input type="checkbox" id="settingCompact" onchange="if(this.checked)document.getElementById('sidebar').classList.add('collapsed');else document.getElementById('sidebar').classList.remove('collapsed')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Animate stat counters</div><div class="settings-desc">Number roll-up on page load</div></div>
+            <label class="toggle"><input type="checkbox" id="settingAnimate" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Show activity feed</div><div class="settings-desc">Display recent activity in Overview</div></div>
+            <label class="toggle"><input type="checkbox" id="settingActivity" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Font size</div></div>
+            <select class="select-sm" onchange="document.documentElement.style.fontSize=this.value">
+              <option value="14px">Small</option>
+              <option value="15px" selected>Medium</option>
+              <option value="16px">Large</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="card anim d2">
+        <div class="card-header"><div class="card-title">Notifications</div></div>
+        <div class="settings-section">
+          <div class="settings-row">
+            <div><div class="settings-label">Revenue alerts</div><div class="settings-desc">Notify when MRR changes &gt;10%</div></div>
+            <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">New customer alerts</div><div class="settings-desc">Alert on enterprise sign-ups</div></div>
+            <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Churn warnings</div><div class="settings-desc">Flag at-risk accounts</div></div>
+            <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Weekly digest email</div><div class="settings-desc">Summary every Monday morning</div></div>
+            <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data preferences -->
+      <div class="card anim d3">
+        <div class="card-header"><div class="card-title">Data Preferences</div></div>
+        <div class="settings-section">
+          <div class="settings-row">
+            <div><div class="settings-label">Currency</div></div>
+            <select class="select-sm"><option selected>USD ($)</option><option>EUR (€)</option><option>GBP (£)</option></select>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Date format</div></div>
+            <select class="select-sm"><option selected>MM/DD/YYYY</option><option>DD/MM/YYYY</option><option>YYYY-MM-DD</option></select>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Default time range</div></div>
+            <select class="select-sm"><option>7D</option><option>1M</option><option>3M</option><option selected>12M</option></select>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Auto-refresh data</div><div class="settings-desc">Refresh every 5 minutes</div></div>
+            <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="card anim d4">
+        <div class="card-header"><div class="card-title">About</div></div>
+        <div class="settings-about">
+          <div class="about-row"><span class="about-key">Dashboard</span><span class="about-val">Clavert Analytics</span></div>
+          <div class="about-row"><span class="about-key">Version</span><span class="about-val">2.0.0</span></div>
+          <div class="about-row"><span class="about-key">Company</span><span class="about-val">Clavert Consulting</span></div>
+          <div class="about-row"><span class="about-key">Built with</span><span class="about-val">Chart.js 4.4 · Vanilla JS</span></div>
+          <div class="about-row"><span class="about-key">Data refresh</span><span class="about-val">Demo mode</span></div>
+        </div>
+        <button class="save-btn" onclick="this.textContent='Saved ✓';setTimeout(()=>this.textContent='Save preferences',1800)">Save preferences</button>
+      </div>
+    </div>
+
+    <div class="dash-footer" style="margin-top:1rem;justify-content:center"><span>Interactive Dashboard Demo — Powered by Clavert Consulting</span></div>
+  </div>
+
+</div>
+
+<!-- Mobile bottom navigation (renders via JS) -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner" id="mobileNavItems"></div>
 </div>
 
 <script>
-/* ── DATA PER TIME RANGE ── */
+/* ══════════════════════════════════════════
+   SINGLE SOURCE OF TRUTH — all data lives here
+   ══════════════════════════════════════════ */
+
+/* Overview time-range data */
 const rangeData={
   '12M':{
     labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
     revenue:[42,48,45,52,58,55,62,68,72,78,82,91].map(v=>v*1000),
     profit:[14,18,18,21,25,23,27,31,34,38,40,46].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:91000,prefix:'$',change:'+23.4%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'dollar',label:'Total Revenue',value:753000,prefix:'$',change:'+23.4%',up:true,bg:'rgba(152,195,244,.12)'},
       {icon:'users',label:'Active Users',value:12847,prefix:'',change:'+12.1%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:3456,prefix:'',change:'+8.7%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:3.8,prefix:'',suffix:'%',change:'-0.3%',up:false,bg:'rgba(201,69,69,.06)'}
@@ -479,7 +650,7 @@ const rangeData={
     revenue:[78,82,91].map(v=>v*1000),
     profit:[38,40,46].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:245000,prefix:'$',change:'+16.7%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'dollar',label:'Total Revenue',value:251000,prefix:'$',change:'+16.7%',up:true,bg:'rgba(152,195,244,.12)'},
       {icon:'users',label:'Active Users',value:3620,prefix:'',change:'+9.3%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:1124,prefix:'',change:'+11.2%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:4.1,prefix:'',suffix:'%',change:'+0.5%',up:true,bg:'rgba(58,158,110,.08)'}
@@ -490,7 +661,7 @@ const rangeData={
     revenue:[20,23,22,26].map(v=>v*1000),
     profit:[10,11,10,15].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:92000,prefix:'$',change:'+11.0%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'dollar',label:'Total Revenue',value:91000,prefix:'$',change:'+11.0%',up:true,bg:'rgba(152,195,244,.12)'},
       {icon:'users',label:'Active Users',value:1180,prefix:'',change:'+4.8%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:398,prefix:'',change:'+6.1%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:3.6,prefix:'',suffix:'%',change:'-0.8%',up:false,bg:'rgba(201,69,69,.06)'}
@@ -501,7 +672,7 @@ const rangeData={
     revenue:[12.4,13.8,11.9,14.2,15.1,9.8,8.6].map(v=>v*1000),
     profit:[5.8,6.4,5.2,6.9,7.3,4.1,3.5].map(v=>v*1000),
     stats:[
-      {icon:'dollar',label:'Total Revenue',value:31800,prefix:'$',change:'+5.2%',up:true,bg:'rgba(152,195,244,.12)'},
+      {icon:'dollar',label:'Total Revenue',value:85800,prefix:'$',change:'+5.2%',up:true,bg:'rgba(152,195,244,.12)'},
       {icon:'users',label:'Active Users',value:430,prefix:'',change:'+2.1%',up:true,bg:'rgba(58,158,110,.08)'},
       {icon:'cart',label:'Total Sales',value:96,prefix:'',change:'+3.4%',up:true,bg:'rgba(93,118,146,.1)'},
       {icon:'target',label:'Conversion Rate',value:4.2,prefix:'',suffix:'%',change:'+0.6%',up:true,bg:'rgba(58,158,110,.08)'}
@@ -509,29 +680,46 @@ const rangeData={
   }
 };
 
+/* Traffic */
 const channels=[{n:'Organic',v:42,c:'#142941'},{n:'Paid',v:28,c:'#98C3F4'},{n:'Social',v:18,c:'#5D7692'},{n:'Direct',v:12,c:'#CBC9C6'}];
 const weekDays=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const visitors=[1240,1580,1420,1680,1520,890,760];
 const sessions=[1890,2340,2100,2560,2280,1340,1120];
-const revenueDetailMonths=['Jan','Feb','Mar','Apr','May','Jun'];
-const revenueDetailMRR=[42000,48000,51000,56000,59000,62400];
-const revenueDetailARR=[504000,576000,612000,672000,708000,748800];
+
+/* Revenue sheet — Jul–Dec, ending at current MRR $91k (= Dec overview revenue) */
+const revenueDetailMonths=['Jul','Aug','Sep','Oct','Nov','Dec'];
+const revenueDetailMRR=[72000,74000,78000,82000,87000,91000];
+const revenueDetailARR=revenueDetailMRR.map(v=>v*12);
+
+/* Customers sheet — Jan–Jun active + new customers */
 const customerMonths=['Jan','Feb','Mar','Apr','May','Jun'];
 const activeCustomersSeries=[10200,10850,11320,11840,12310,12847];
 const newCustomersSeries=[620,680,710,730,760,820];
+/* Segments: 96+312+1420 = 1828 paying; MRR sums to $91k */
 const customerSegments=[
-  {name:'Enterprise',customers:180,value:8200},
-  {name:'Mid-market',customers:640,value:5200},
-  {name:'SMB',customers:1480,value:2600}
+  {name:'Enterprise',customers:96,mrr:47000},
+  {name:'Mid-market',customers:312,mrr:27000},
+  {name:'SMB',customers:1420,mrr:17000}
 ];
-const productMonths=['Jan','Feb','Mar','Apr','May','Jun'];
+
+/* Products — used across Overview, Products sheet, and Revenue by Product */
 const products=[
-  {name:'Enterprise Analytics Suite',sales:234,revenue:'$187,200',growth:23},
-  {name:'Data Pipeline Pro',sales:189,revenue:'$151,200',growth:15},
-  {name:'Dashboard Builder',sales:156,revenue:'$93,600',growth:31},
-  {name:'API Integration Kit',sales:134,revenue:'$67,000',growth:-5},
-  {name:'Cloud Storage Plan',sales:98,revenue:'$39,200',growth:8}
+  {name:'Enterprise Analytics Suite',sales:234,revenue:'$187,200',revenueNum:187200,growth:23},
+  {name:'Data Pipeline Pro',sales:189,revenue:'$151,200',revenueNum:151200,growth:15},
+  {name:'Dashboard Builder',sales:156,revenue:'$93,600',revenueNum:93600,growth:31},
+  {name:'API Integration Kit',sales:134,revenue:'$67,000',revenueNum:67000,growth:-5},
+  {name:'Cloud Storage Plan',sales:98,revenue:'$39,200',revenueNum:39200,growth:8}
 ];
+/* Product MRR trend — Jul–Dec, reflects growth/decline per product */
+const productMonths=['Jul','Aug','Sep','Oct','Nov','Dec'];
+const productTrendData=[
+  {label:'Enterprise Analytics Suite',color:'#142941',data:[28000,29500,30500,31500,33000,35000]},
+  {label:'Data Pipeline Pro',color:'#3A5F80',data:[21000,22000,22500,23500,24000,25200]},
+  {label:'Dashboard Builder',color:'#5D7692',data:[11000,11800,12500,13200,14200,15600]},
+  {label:'API Integration Kit',color:'#98C3F4',data:[12500,12200,11900,11600,11400,11200]},
+  {label:'Cloud Storage Plan',color:'#CBC9C6',data:[5500,5800,6100,6400,6600,6800]}
+];
+
 const activities=[
   {type:'sale',title:'New enterprise deal closed',desc:'Acme Corp — $48,000 ARR',time:'2m ago'},
   {type:'user',title:'New user onboarded',desc:'sarah.chen@techfirm.io',time:'8m ago'},
@@ -547,7 +735,7 @@ const navItems=[
   {icon:'settings',label:'Settings',id:'settings'}
 ];
 
-/* ── ICONS (mini SVGs) ── */
+/* ── ICONS ── */
 const icons={
   layers:'<path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
   'bar-chart':'<path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>',
@@ -569,72 +757,57 @@ function svg(name,size=17){return `<svg width="${size}" height="${size}" viewBox
 /* ── SIDEBAR ── */
 let activeNav='overview';
 let activeSheet='overview';
-const sectionMap={
-  overview:'.header',
-  revenue:'#sheet-revenue',
-  customers:'#sheet-customers',
-  products:'#sheet-products',
-  settings:'.dash-footer'
-};
+
 function renderNav(){
-  const el=document.getElementById('navItems');
-  el.innerHTML=navItems.map(n=>`<button class="nav-btn${n.id===activeNav?' active':''}" onclick="setNav('${n.id}')">${svg(n.icon)}<span class="nav-label">${n.label}</span>${n.id===activeNav?'<span class="nav-dot"></span>':''}</button>`).join('');
+  document.getElementById('navItems').innerHTML=navItems.map(n=>`<button class="nav-btn${n.id===activeNav?' active':''}" onclick="setNav('${n.id}')">${svg(n.icon)}<span class="nav-label">${n.label}</span>${n.id===activeNav?'<span class="nav-dot"></span>':''}</button>`).join('');
+  const mob=document.getElementById('mobileNavItems');
+  if(mob)mob.innerHTML=navItems.map(n=>`<button class="mobile-nav-btn${n.id===activeNav?' active':''}" onclick="setNav('${n.id}')">${svg(n.icon,20)}<span>${n.label}</span></button>`).join('');
 }
+
+/* Lazy-init flags so hidden-sheet charts are created after the container is visible */
+const sheetInited={revenue:false,customers:false,products:false};
+
 function setNav(id){
   activeNav=id;
   renderNav();
-  if(['overview','revenue','customers','products'].includes(id)){
-    activeSheet=id;
-  }else{
-    activeSheet='overview';
-  }
-  document.querySelectorAll('.sheet').forEach(s=>{
-    s.classList.toggle('active',s.id==='sheet-'+activeSheet);
+  activeSheet=['overview','revenue','customers','products','settings'].includes(id)?id:'overview';
+  document.querySelectorAll('.sheet').forEach(s=>s.classList.toggle('active',s.id==='sheet-'+activeSheet));
+  document.querySelector('.main').scrollTop=0;
+  requestAnimationFrame(()=>{
+    if(activeSheet==='revenue'&&!sheetInited.revenue){sheetInited.revenue=true;initRevenueCharts();}
+    if(activeSheet==='customers'&&!sheetInited.customers){sheetInited.customers=true;initCustomersCharts();}
+    if(activeSheet==='products'&&!sheetInited.products){sheetInited.products=true;initProductsCharts();}
   });
-  const target=document.querySelector(sectionMap[id]||'.header');
-  if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
 function toggleSidebar(){
   const sb=document.getElementById('sidebar');sb.classList.toggle('collapsed');
-  const ic=document.getElementById('collapseIcon');
-  ic.setAttribute('d',sb.classList.contains('collapsed')?'M9 18l6-6-6-6':'M15 18l-6-6 6-6');
+  document.getElementById('collapseIcon').setAttribute('d',sb.classList.contains('collapsed')?'M9 18l6-6-6-6':'M15 18l-6-6 6-6');
 }
 renderNav();
-document.querySelectorAll('.sheet').forEach(s=>{
-  s.classList.toggle('active',s.id==='sheet-overview');
-});
+document.querySelectorAll('.sheet').forEach(s=>s.classList.toggle('active',s.id==='sheet-overview'));
+
 /* ── TIME PILLS ── */
 let activeRange='12M';
 function renderPills(){
-  const el=document.getElementById('timePills');
-  el.innerHTML=['7D','1M','3M','12M'].map(r=>`<button class="time-pill${r===activeRange?' active':''}" onclick="setRange('${r}')">${r}</button>`).join('');
+  document.getElementById('timePills').innerHTML=['7D','1M','3M','12M'].map(r=>`<button class="time-pill${r===activeRange?' active':''}" onclick="setRange('${r}')">${r}</button>`).join('');
 }
-function setRange(r){
-  activeRange=r;
-  renderPills();
-  document.getElementById('rangeLabel').textContent=r;
-  updateRevenueChart();
-  renderStats();
-}
+function setRange(r){activeRange=r;renderPills();document.getElementById('rangeLabel').textContent=r;updateRevenueChart();renderStats();}
 renderPills();
 
 /* ── STAT CARDS ── */
 function animateValue(el,end,prefix='',suffix=''){
-  const dur=900;const t0=Date.now();
-  (function tick(){const p=Math.min((Date.now()-t0)/dur,1);const e=1-Math.pow(1-p,3);
-    const v=suffix==='%'?(e*end).toFixed(1):Math.floor(e*end).toLocaleString();
-    el.textContent=prefix+v+suffix;
-    if(p<1)requestAnimationFrame(tick)})();
+  const dur=900,t0=Date.now();
+  (function tick(){const p=Math.min((Date.now()-t0)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=prefix+(suffix==='%'?(e*end).toFixed(1):Math.floor(e*end).toLocaleString())+suffix;
+    if(p<1)requestAnimationFrame(tick);})();
 }
 function renderStats(){
-  const el=document.getElementById('statsGrid');
   const stats=rangeData[activeRange].stats;
-  el.innerHTML=stats.map((s,i)=>`
+  document.getElementById('statsGrid').innerHTML=stats.map((s,i)=>`
     <div class="stat-card anim d${i+1}">
-      <div class="stat-top">
-        <div class="stat-icon" style="background:${s.bg}">${svg(s.icon,18)}</div>
-        <div class="stat-badge ${s.up?'up':'down'}">${svg(s.up?'arrow-up':'arrow-down',12)}${s.change}</div>
-      </div>
+      <div class="stat-top"><div class="stat-icon" style="background:${s.bg}">${svg(s.icon,18)}</div>
+      <div class="stat-badge ${s.up?'up':'down'}">${svg(s.up?'arrow-up':'arrow-down',12)}${s.change}</div></div>
       <div class="stat-label">${s.label}</div>
       <div class="stat-value" id="stat${i}">0</div>
     </div>`).join('');
@@ -642,33 +815,45 @@ function renderStats(){
 }
 renderStats();
 
-/* ── REVENUE CHART ── */
-const revCanvas=document.getElementById('revenueChart');
-revCanvas.width=revCanvas.parentElement.clientWidth;
-const revCtx=revCanvas.getContext('2d');
+/* ── SHARED CHART DEFAULTS ── */
+const GRID='rgba(203,201,198,.22)';
+const TIP={backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:10,padding:11,titleFont:{size:10,weight:600},bodyFont:{size:12}};
+const chartOpts={
+  responsive:true,maintainAspectRatio:false,animation:false,
+  interaction:{intersect:false,mode:'index'},
+  plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>`${ctx.dataset.label}: $${(ctx.parsed.y/1000).toFixed(1)}k`}}},
+  scales:{
+    x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},
+    y:{grid:{color:GRID},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'}}
+  }
+};
+
+/* ── REVENUE & PROFIT CHART (OVERVIEW) ── */
+const revCtx=document.getElementById('revenueChart').getContext('2d');
 function makeGradients(ctx,h){
-  const rg=ctx.createLinearGradient(0,0,0,h);rg.addColorStop(0,'rgba(20,41,65,.08)');rg.addColorStop(1,'rgba(20,41,65,0)');
-  const pg=ctx.createLinearGradient(0,0,0,h);pg.addColorStop(0,'rgba(152,195,244,.18)');pg.addColorStop(1,'rgba(152,195,244,0)');
+  const rg=ctx.createLinearGradient(0,0,0,h);rg.addColorStop(0,'rgba(20,41,65,.10)');rg.addColorStop(1,'rgba(20,41,65,0)');
+  const pg=ctx.createLinearGradient(0,0,0,h);pg.addColorStop(0,'rgba(152,195,244,.22)');pg.addColorStop(1,'rgba(152,195,244,0)');
   return[rg,pg];
 }
-const chartOpts={responsive:false,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
-  animation:false,
-  plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:12,titleFont:{size:10,weight:600},bodyFont:{size:13},callbacks:{label:ctx=>`${ctx.dataset.label}: $${(ctx.parsed.y/1000).toFixed(1)}k`}}},
-  scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+v/1000+'k'}}}};
-const[revGrad0,profGrad0]=makeGradients(revCtx,160);
-const revChart=new Chart(revCtx,{type:'line',data:{labels:rangeData['12M'].labels,datasets:[
-  {label:'Revenue',data:rangeData['12M'].revenue,borderColor:'#142941',backgroundColor:revGrad0,fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#142941',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2},
-  {label:'Profit',data:rangeData['12M'].profit,borderColor:'#98C3F4',backgroundColor:profGrad0,fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#98C3F4',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2}
-]},options:{...chartOpts,
-  layout:{padding:{left:10,right:24,top:8,bottom:10}},
-  plugins:{...chartOpts.plugins,beforeDraw(chart){
-    const h=chart.chartArea?.height||160;
-    const[rg,pg]=makeGradients(chart.ctx,h);
-    chart.data.datasets[0].backgroundColor=rg;
-    chart.data.datasets[1].backgroundColor=pg;
-  }}
-}});
-
+const[rg0,pg0]=makeGradients(revCtx,185);
+/* Cache gradients to avoid memory leak on repeated redraws */
+let _gradH=-1,_gradRg=rg0,_gradPg=pg0;
+const revChart=new Chart(revCtx,{
+  type:'line',
+  data:{labels:rangeData['12M'].labels,datasets:[
+    {label:'Revenue',data:rangeData['12M'].revenue,borderColor:'#142941',backgroundColor:rg0,fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#142941',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2},
+    {label:'Profit',data:rangeData['12M'].profit,borderColor:'#98C3F4',backgroundColor:pg0,fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#98C3F4',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2}
+  ]},
+  plugins:[{
+    beforeDatasetsDraw(chart){
+      const h=Math.round(chart.chartArea?.height||185);
+      if(h!==_gradH){_gradH=h;[_gradRg,_gradPg]=makeGradients(chart.ctx,h);}
+      chart.data.datasets[0].backgroundColor=_gradRg;
+      chart.data.datasets[1].backgroundColor=_gradPg;
+    }
+  }],
+  options:{...chartOpts,layout:{padding:{right:8,top:4}}}
+});
 function updateRevenueChart(){
   const d=rangeData[activeRange];
   revChart.data.labels=d.labels;
@@ -677,25 +862,22 @@ function updateRevenueChart(){
   revChart.update();
 }
 
-/* ── CHANNEL PIE ── */
-const chCanvas=document.getElementById('channelChart');
-chCanvas.width=chCanvas.parentElement.clientWidth;
-const chCtx=chCanvas.getContext('2d');
-new Chart(chCtx,{type:'doughnut',data:{labels:channels.map(c=>c.n),datasets:[{data:channels.map(c=>c.v),backgroundColor:channels.map(c=>c.c),borderWidth:0,hoverOffset:6}]},options:{responsive:false,maintainAspectRatio:false,cutout:'68%',animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}}}});
+/* ── CHANNEL DOUGHNUT ── */
+new Chart(document.getElementById('channelChart').getContext('2d'),{
+  type:'doughnut',
+  data:{labels:channels.map(c=>c.n),datasets:[{data:channels.map(c=>c.v),backgroundColor:channels.map(c=>c.c),borderWidth:0,hoverOffset:6}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'68%',animation:false,plugins:{legend:{display:false},tooltip:{...TIP}}}
+});
 document.getElementById('channelList').innerHTML=channels.map(c=>`<div class="channel-item"><span class="channel-dot" style="background:${c.c}"></span><span class="channel-name">${c.n}</span><span class="channel-val">${c.v}%</span></div>`).join('');
 
-/* ── PRODUCTS TABLE ── */
-document.getElementById('productTable').innerHTML=products.map(p=>`
+/* ── PRODUCT TABLE (shared HTML, used in Overview & Products sheet) ── */
+const productRowsHtml=products.map(p=>`
   <div class="table-row">
     <span class="name">${p.name}</span><span class="num">${p.sales}</span><span class="rev">${p.revenue}</span>
     <span class="growth ${p.growth>0?'up':'down'}">${svg(p.growth>0?'trending-up':'trending-down',13)}${p.growth>0?'+':''}${p.growth}%</span>
   </div>`).join('');
-
-document.getElementById('productTableProducts').innerHTML=products.map(p=>`
-  <div class="table-row">
-    <span class="name">${p.name}</span><span class="num">${p.sales}</span><span class="rev">${p.revenue}</span>
-    <span class="growth ${p.growth>0?'up':'down'}">${svg(p.growth>0?'trending-up':'trending-down',13)}${p.growth>0?'+':''}${p.growth}%</span>
-  </div>`).join('');
+document.getElementById('productTable').innerHTML=productRowsHtml;
+document.getElementById('productTableProducts').innerHTML=productRowsHtml;
 
 /* ── ACTIVITY FEED ── */
 const actColors={sale:'rgba(152,195,244,.12)',user:'rgba(58,158,110,.08)',alert:'rgba(201,69,69,.07)',product:'rgba(93,118,146,.1)',target:'rgba(152,195,244,.12)'};
@@ -707,119 +889,164 @@ document.getElementById('activityFeed').innerHTML=activities.map(a=>`
     <span class="activity-time">${a.time}</span>
   </div>`).join('');
 
-/* ── TRAFFIC BAR CHART ── */
-const trCanvas=document.getElementById('trafficChart');
-trCanvas.width=trCanvas.parentElement.clientWidth;
-const trCtx=trCanvas.getContext('2d');
-new Chart(trCtx,{type:'bar',data:{labels:weekDays,datasets:[
-  {label:'Visitors',data:visitors,backgroundColor:'#142941',borderRadius:6,maxBarThickness:46,barPercentage:.85,categoryPercentage:.8},
-  {label:'Sessions',data:sessions,backgroundColor:'#98C3F4',borderRadius:6,maxBarThickness:46,barPercentage:.85,categoryPercentage:.8}
-]},options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11}}}}}});
+/* ── WEEKLY TRAFFIC BAR CHART ── */
+new Chart(document.getElementById('trafficChart').getContext('2d'),{
+  type:'bar',
+  data:{labels:weekDays,datasets:[
+    {label:'Visitors',data:visitors,backgroundColor:'#142941',borderRadius:6,maxBarThickness:46,barPercentage:.85,categoryPercentage:.8},
+    {label:'Sessions',data:sessions,backgroundColor:'#98C3F4',borderRadius:6,maxBarThickness:46,barPercentage:.85,categoryPercentage:.8}
+  ]},
+  options:{...chartOpts,plugins:{...chartOpts.plugins,tooltip:{...TIP,callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`}}},
+    scales:{x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:GRID},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}}}}
+});
 
-/* ── REVENUE DETAIL CHARTS (REVENUE SHEET) ── */
-const revDetailCanvas=document.getElementById('revenueDetailChart');
-if(revDetailCanvas){
-  revDetailCanvas.width=revDetailCanvas.parentElement.clientWidth;
-  const revDetailCtx=revDetailCanvas.getContext('2d');
-  new Chart(revDetailCtx,{
+/* ════════════════════════════════
+   REVENUE SHEET — lazy init
+   ════════════════════════════════ */
+function initRevenueCharts(){
+  /* MRR vs ARR — dual Y-axes so both scales are legible */
+  new Chart(document.getElementById('revenueDetailChart').getContext('2d'),{
     type:'line',
     data:{labels:revenueDetailMonths,datasets:[
-      {label:'MRR',data:revenueDetailMRR,borderColor:'#142941',backgroundColor:'rgba(20,41,65,.08)',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
-      {label:'ARR',data:revenueDetailARR,borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.18)',fill:false,tension:.35,borderWidth:2.5,pointRadius:0}
+      {label:'MRR',data:revenueDetailMRR,borderColor:'#142941',backgroundColor:'rgba(20,41,65,.09)',fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,yAxisID:'y'},
+      {label:'ARR',data:revenueDetailARR,borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.10)',fill:false,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,yAxisID:'y1'}
     ]},
-    options:chartOpts
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      interaction:{intersect:false,mode:'index'},
+      plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>`${ctx.dataset.label}: $${(ctx.parsed.y/1000).toFixed(0)}k`}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},
+        y:{position:'left',grid:{color:GRID},border:{display:false},ticks:{color:'#5D7692',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'},title:{display:true,text:'MRR',color:'#5D7692',font:{size:10}}},
+        y1:{position:'right',grid:{display:false},border:{display:false},ticks:{color:'#98C3F4',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'},title:{display:true,text:'ARR',color:'#98C3F4',font:{size:10}}}
+      }
+    }
   });
-}
 
-const revProductCanvas=document.getElementById('revenueProductChart');
-if(revProductCanvas){
-  revProductCanvas.width=revProductCanvas.parentElement.clientWidth;
-  const revProductCtx=revProductCanvas.getContext('2d');
-  new Chart(revProductCtx,{type:'bar',data:{labels:[
-      'Enterprise Analytics','Data Pipeline','Dashboard Builder','API Kit'
-    ],datasets:[{
-      label:'Revenue',
-      data:[187200,151200,93600,67000],
-      backgroundColor:['#142941','#5D7692','#98C3F4','#CBC9C6'],
-      borderRadius:6,
-      maxBarThickness:40
-    }]},options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+(v/1000)+'k'}}}}});
-}
-
-/* ── CUSTOMERS CHARTS (CUSTOMERS SHEET) ── */
-const customerLifecycleCanvas=document.getElementById('customerLifecycleChart');
-if(customerLifecycleCanvas){
-  customerLifecycleCanvas.width=customerLifecycleCanvas.parentElement.clientWidth;
-  const customerLifecycleCtx=customerLifecycleCanvas.getContext('2d');
-  new Chart(customerLifecycleCtx,{
-    type:'line',
+  /* Revenue by Product — all 5 products */
+  new Chart(document.getElementById('revenueProductChart').getContext('2d'),{
+    type:'bar',
     data:{
-      labels:customerMonths,
-      datasets:[
-        {label:'Active',data:activeCustomersSeries,borderColor:'#142941',backgroundColor:'rgba(20,41,65,.08)',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
-        {label:'New',data:newCustomersSeries,borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.18)',fill:false,tension:.35,borderWidth:2.5,pointRadius:0}
-      ]
+      labels:['Enterprise Analytics','Data Pipeline Pro','Dashboard Builder','API Integration Kit','Cloud Storage Plan'],
+      datasets:[{
+        label:'Revenue',
+        data:products.map(p=>p.revenueNum),
+        backgroundColor:['#142941','#3A5F80','#5D7692','#98C3F4','#CBC9C6'],
+        borderRadius:6,maxBarThickness:44
+      }]
     },
-    options:chartOpts
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>`Revenue: $${(ctx.parsed.y/1000).toFixed(1)}k`}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:10},maxRotation:20,minRotation:0}},
+        y:{grid:{color:GRID},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'}}
+      }
+    }
   });
 }
 
-const customerSegmentCanvas=document.getElementById('customerSegmentChart');
-if(customerSegmentCanvas){
-  customerSegmentCanvas.width=customerSegmentCanvas.parentElement.clientWidth;
-  const customerSegmentCtx=customerSegmentCanvas.getContext('2d');
-  new Chart(customerSegmentCtx,{
+/* ════════════════════════════════
+   CUSTOMERS SHEET — lazy init
+   ════════════════════════════════ */
+function initCustomersCharts(){
+  /* Active vs New — dual Y-axes (scales differ ~15x) */
+  new Chart(document.getElementById('customerLifecycleChart').getContext('2d'),{
+    type:'line',
+    data:{labels:customerMonths,datasets:[
+      {label:'Active',data:activeCustomersSeries,borderColor:'#142941',backgroundColor:'rgba(20,41,65,.09)',fill:true,tension:.35,borderWidth:2.5,pointRadius:0,pointHoverRadius:4,yAxisID:'y'},
+      {label:'New',data:newCustomersSeries,borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.12)',fill:false,tension:.35,borderWidth:2.5,pointRadius:3,pointHoverRadius:5,yAxisID:'y1'}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      interaction:{intersect:false,mode:'index'},
+      plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},
+        y:{position:'left',grid:{color:GRID},border:{display:false},ticks:{color:'#5D7692',font:{size:11},callback:v=>v.toLocaleString()},title:{display:true,text:'Active',color:'#5D7692',font:{size:10}}},
+        y1:{position:'right',grid:{display:false},border:{display:false},ticks:{color:'#98C3F4',font:{size:11}},title:{display:true,text:'New / mo.',color:'#98C3F4',font:{size:10}}}
+      }
+    }
+  });
+
+  /* Customers by Segment — grouped bar: customer count + MRR */
+  new Chart(document.getElementById('customerSegmentChart').getContext('2d'),{
     type:'bar',
     data:{
       labels:customerSegments.map(s=>s.name),
       datasets:[
-        {
-          label:'Customers',
-          data:customerSegments.map(s=>s.customers),
-          backgroundColor:'#142941',
-          borderRadius:6,
-          maxBarThickness:40
-        }
+        {label:'Customers',data:customerSegments.map(s=>s.customers),backgroundColor:['#142941','#5D7692','#98C3F4'],borderRadius:6,maxBarThickness:50,yAxisID:'y'},
+        {label:'MRR',data:customerSegments.map(s=>s.mrr),backgroundColor:['rgba(20,41,65,.18)','rgba(93,118,146,.22)','rgba(152,195,244,.35)'],borderRadius:6,maxBarThickness:50,yAxisID:'y1'}
       ]
     },
-    options:{responsive:false,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}},scales:{x:{grid:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},y:{grid:{color:'#F7F5F3',drawBorder:false},ticks:{color:'#CBC9C6',font:{size:11}}}}}
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      interaction:{intersect:false,mode:'index'},
+      plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>ctx.datasetIndex===0?`Customers: ${ctx.parsed.y.toLocaleString()}`:`MRR: $${(ctx.parsed.y/1000).toFixed(0)}k`}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},
+        y:{position:'left',grid:{color:GRID},border:{display:false},ticks:{color:'#5D7692',font:{size:11}},title:{display:true,text:'Customers',color:'#5D7692',font:{size:10}}},
+        y1:{position:'right',grid:{display:false},border:{display:false},ticks:{color:'#98C3F4',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'},title:{display:true,text:'MRR',color:'#98C3F4',font:{size:10}}}
+      }
+    }
   });
 }
 
-/* ── PRODUCTS CHARTS (PRODUCTS SHEET) ── */
-const productShareCanvas=document.getElementById('productShareChart');
-if(productShareCanvas){
-  productShareCanvas.width=productShareCanvas.parentElement.clientWidth;
-  const productShareCtx=productShareCanvas.getContext('2d');
-  new Chart(productShareCtx,{
+/* ════════════════════════════════
+   PRODUCTS SHEET — lazy init
+   ════════════════════════════════ */
+function initProductsCharts(){
+  /* Revenue Share doughnut — all 5 products with legend */
+  new Chart(document.getElementById('productShareChart').getContext('2d'),{
     type:'doughnut',
     data:{
       labels:products.map(p=>p.name),
       datasets:[{
-        data:products.map(p=>parseInt(p.revenue.replace(/[^0-9]/g,''),10)),
-        backgroundColor:['#142941','#5D7692','#98C3F4','#CBC9C6','#F7F5F3'],
-        borderWidth:0
+        data:products.map(p=>p.revenueNum),
+        backgroundColor:['#142941','#3A5F80','#5D7692','#98C3F4','#CBC9C6'],
+        borderWidth:2,borderColor:'#fff',hoverOffset:6
       }]
     },
-    options:{responsive:false,maintainAspectRatio:false,cutout:'68%',animation:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#142941',titleColor:'#CBC9C6',bodyColor:'#F7F5F3',cornerRadius:12,padding:10}}}
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'65%',animation:false,
+      plugins:{
+        legend:{display:true,position:'right',labels:{color:'#5D7692',font:{size:10},boxWidth:10,padding:8,
+          generateLabels:chart=>{
+            const ds=chart.data.datasets[0];
+            return chart.data.labels.map((l,i)=>({
+              text:l.split(' ').slice(0,2).join(' '),fillStyle:ds.backgroundColor[i],
+              strokeStyle:ds.backgroundColor[i],hidden:false,index:i
+            }));
+          }
+        }},
+        tooltip:{...TIP,callbacks:{label:ctx=>`$${(ctx.parsed/1000).toFixed(1)}k (${Math.round(ctx.parsed/products.reduce((a,p)=>a+p.revenueNum,0)*100)}%)`}}
+      }
+    }
   });
-}
 
-const productTrendCanvas=document.getElementById('productTrendChart');
-if(productTrendCanvas){
-  productTrendCanvas.width=productTrendCanvas.parentElement.clientWidth;
-  const productTrendCtx=productTrendCanvas.getContext('2d');
-  new Chart(productTrendCtx,{
+  /* Product MRR Trend — all 5 products, Jul–Dec */
+  new Chart(document.getElementById('productTrendChart').getContext('2d'),{
     type:'line',
     data:{
       labels:productMonths,
-      datasets:[
-        {label:'Enterprise Analytics Suite',data:[28000,29500,30500,31500,32500,35000],borderColor:'#142941',backgroundColor:'rgba(20,41,65,.08)',fill:false,tension:.35,borderWidth:2.2,pointRadius:0},
-        {label:'Data Pipeline Pro',data:[21000,22000,22500,23000,23800,24500],borderColor:'#5D7692',backgroundColor:'rgba(93,118,146,.1)',fill:false,tension:.35,borderWidth:2.2,pointRadius:0},
-        {label:'Dashboard Builder',data:[12000,12500,13000,13500,14000,14500],borderColor:'#98C3F4',backgroundColor:'rgba(152,195,244,.18)',fill:false,tension:.35,borderWidth:2.2,pointRadius:0}
-      ]
+      datasets:productTrendData.map(p=>({
+        label:p.label,data:p.data,borderColor:p.color,
+        backgroundColor:p.color.replace('#','rgba(').replace(/(..)(..)(..)$/,(_,r,g,b)=>`${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},.08)`),
+        fill:false,tension:.35,borderWidth:2.2,pointRadius:0,pointHoverRadius:4
+      }))
     },
-    options:chartOpts
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      interaction:{intersect:false,mode:'index'},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:'#5D7692',font:{size:10},boxWidth:12,padding:8,usePointStyle:true}},
+        tooltip:{...TIP,callbacks:{label:ctx=>`${ctx.dataset.label}: $${(ctx.parsed.y/1000).toFixed(1)}k`}}
+      },
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11}}},
+        y:{grid:{color:GRID},border:{display:false},ticks:{color:'#CBC9C6',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'}}
+      }
+    }
   });
 }
 </script>
